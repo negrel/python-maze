@@ -8,6 +8,7 @@ directions = {
     'GAUCHE': [0, -1],
 }
 
+
 # tourner prend une direction en paramètre et retourne une direction
 # de 90° vers la droite ou la gauche.
 def tourner(dir_actuel, droite):
@@ -15,9 +16,17 @@ def tourner(dir_actuel, droite):
     i = int(not droite)
     if not dir_actuel[i] == 0:
         dir_actuel[i] *= -1
-    
+
     # On inverse l'index Y et X
     x = dir_actuel[1]
     y = dir_actuel[0]
 
+    return [x, y]
+
+
+# avance prend une position et une direction et avance une fois
+# dans la direction
+def avancer(position, direction):
+    x = position[0] + direction[0]
+    y = position[1] + direction[1]
     return [x, y]
