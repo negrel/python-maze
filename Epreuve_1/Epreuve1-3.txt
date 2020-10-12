@@ -1,31 +1,32 @@
-G : tourner à gauche
-D : tourner à droite
-T : aller tout droit (1case)
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Oct 12 11:42:08 2020
 
-chaîne d’ordres : GTDTDT
- 
-SortirLabyrinthe()
-tourner à gauche "90°"
-chaîne d’ordres <- ajout G 
+@author: vivien
+"""
+#    y-1
+#x-1    x+1
+#    y+1
 
-si (T = false)
-	tourne à droite "90°"
-	chaîne d’ordres <- chaîne d’ordres + D
+def CreationChaine(Tab,x,y,ValeurPosition):
+#G : tourner à gauche
+#D : tourner à droite
+#T : aller tout droit (1case)
+    Tab[y][x]=ValeurPosition
+    ChaineCaractere = []
 
-	si (T = false)
-		tourner à droite "90°"
-		chaîne d’ordres <- chaîne d’ordres + D
-		
-	sinon
-		avanvce 1 case
-		chaîne d’ordres <- chaîne d’ordres + T
-		return SortirLabyrinthe
-
-si (T = true)
-	avance 1 case
-	chaîne d’ordres <- chaîne d’ordres + T
-	return SortirLabyrinthe
-	
+# Si x+1 est plus grande que ValeurPosition
+        if (Tab[y+1][x]>ValeurPosition):
+            CreationChaine (ChaineCaractere.append(D))
+        
+# Si x-1 est plus grande que ValeurPosition
+        if (Tab[y-1][x]>ValeurPosition):
+        	CreationChaine (ChaineCaractere.append(G))
+            
+# Si y+1 est plus grande que ValeurPosition
+        if (Tab[y][x+1]>ValeurPosition):
+    	   	CreationChaine (ChaineCaractere.append(T))
 	
 
 	
