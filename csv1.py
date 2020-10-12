@@ -25,12 +25,12 @@ def printcsv(matrice, position, cDepart='\033[92m', cArrivee='\033[94m', cMinota
                 s += cDepart
                 s += mur
                 s += '\033[0m'
-            elif (i == len(matrice[0])-2 and j == len(matrice)-2):
-                s += cArrivee
-                s += mur
-                s += '\033[0m'
             elif (position[0] == i and position[1] == j):
                 s += cMinotaure
+                s += mur
+                s += '\033[0m'
+            elif (i == len(matrice[0])-2 and j == len(matrice)-2):
+                s += cArrivee
                 s += mur
                 s += '\033[0m'
             else:
