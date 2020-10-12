@@ -2,6 +2,10 @@
 
 import csv1
 import solution
+import sys
+
+filename = sys.argv[2]
+#TODO Check que le fichier existe
 
 def cli(grille):
     start = [1, 1]
@@ -29,4 +33,9 @@ def cli(grille):
             print("Vous avez gagné, félicitations.")
             break
 
-cli(csv1.readcsv("./exemple/exemple1.csv"))
+if(sys.argv[1] == 'play'):
+    cli(csv1.readcsv(filename))
+elif(sys.argv[1] == 'solve'):
+    print("Not yet")
+else:
+    print("Play ou Solve en argument")
