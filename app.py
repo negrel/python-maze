@@ -1,21 +1,32 @@
 #!/usr/bin/env python
 
-from load import *
+import csv1
+import solution
 
-def cli(grille, start, end):
-    print_grille(grille)
+def cli(grille):
+    start = [1, 1]
+    end = [len(grille)-1, len(grille[0])-1]
+
+    csv1.printcsv(grille, start)
     print()
 
     ordres = ""
     while True:
         # On demande à l'utilisateur de rentrer les ordres.
-        ordres = input(
-        f"Entrer les directions pour finir le labyrinthe: ")
+        try:
+            ordres = input(
+            f"Entrer les directions pour finir le labyrinthe: ")
+        # CTRL-D on quitte le programme.
+        except EOFError:
+            break
 
-        gagner, err = verifie_solution(grille, start, end, ordres)
+        # Si on a pas gagner on affiche l'erreur retourner.
+        gagner, err = solution.verifie(grille, start, end, ordres)
         if not gagner:
-            print(err)
+            print(f"Erreur: {err} (ctrl-D pour quitter)")
 
         else:
             print("Vous avez gagné, félicitations.")
             break
+
+cli(csv1.readcsv("./exemple/exemple1.csv"), [1, 1], [13, 9])

@@ -1,7 +1,7 @@
 from deplacement import directions
 import parse
 
-PasSortieErr = "Vous n'êtes pas sorti du labyrinthe. (ctrl-D pour quitter)"
+PasSortieErr = "vous n'êtes pas sorti du labyrinthe"
 
 # Verifie que la suite d'ordre donnée mène vers la sortie.
 def verifie(grille, start, end, ordres):
@@ -21,7 +21,7 @@ def verifie(grille, start, end, ordres):
     return (True, None)
 
 
-MurErreur = "Vous essayer de passer à travers un mur."
+MurErreur = "vous essayer de passer à travers un mur"
 
 # Verifie que la liste d'ordre mène a la sortie
 def __verifie_list(grille, position, direction, ordres):
