@@ -16,11 +16,18 @@ def readcsv(filename):
 matrice = readcsv('./exemple/exemple1.csv')
 print(matrice)
 
+<<<<<<< HEAD
 def printcsv(matrice, mur, vide, cDepart, cArrivee):
     i, j = 0, 0
+=======
+def printcsv(matrice, mur, vide):
+    # On regarde la ligne 
+>>>>>>> ffe2387f62b543cb972250563918c5424c6410bf
     for ligne in matrice:
         s = ''
+        # On regarde dans la cellule 
         for cellule in ligne:
+<<<<<<< HEAD
             if (i == 1 and j == 1):
                 s += cDepart
                 s += mur
@@ -34,8 +41,14 @@ def printcsv(matrice, mur, vide, cDepart, cArrivee):
             i += 1
         i = 0
         j += 1
+=======
+            # definit si mur ou vide
+            s += mur if cellule == -1 else vide
+            
+>>>>>>> ffe2387f62b543cb972250563918c5424c6410bf
         print(s)
 
+# couleur affichage 
 MUR = '\u2588\u2588'
 VIDE = '  '
 VERT = '\033[92m'
