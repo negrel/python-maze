@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# Liste des directions possible.
 directions = {
     'HAUT': [-1, 0],
     'DROITE': [0, 1],
@@ -7,13 +8,15 @@ directions = {
     'GAUCHE': [0, -1],
 }
 
-
+# tourner prend une direction en paramètre et retourne une direction
+# de 90° vers la droite ou la gauche.
 def tourner(dir_actuel, droite):
-    if droite and dir_actuel[1] == 0:
-        dir_actuel[0] *= -1
-    elif not droite and dir_actuel[0] == 0:
-        dir_actuel[1] *= -1
-
+    # On inverse le signe si necessaire
+    i = int(not droite)
+    if not dir_actuel[i] == 0:
+        dir_actuel[i] *= -1
+    
+    # On inverse l'index Y et X
     x = dir_actuel[1]
     y = dir_actuel[0]
 
