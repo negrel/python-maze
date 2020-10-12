@@ -2,8 +2,9 @@
 
 from deplacement import *
 
-PasSortieErr = "Vous n'êtes pas sorti du labyrinthe."
+PasSortieErr = "Vous n'êtes pas sorti du labyrinthe. (ctrl-D pour quitter)"
 
+# Verifie que la suite d'ordre donnée mène vers la sortie.
 def verifie_solution(grille, start, end, ordres):
     # Le minautore commence a la position start: [y, x]
     position = start
@@ -12,28 +13,34 @@ def verifie_solution(grille, start, end, ordres):
 
     position, err = parse_ordres(grille, position, direction, ordres)
     if not err == None:
-        return err
+        return (False, err)
 
     if not position == end:
-        return PasSortieErr
+        return (False, PasSortieErr)
 
+    return (True, None)
 
+MurErreur = "Vous essayer de passer à travers un mur."
+
+# Parse les ordres données et renvoie la position après avoir
+# suivis les ordres
 def parse_ordres(grille, position, direction, ordres):
     for i, ordre in enumerate(ordres):
         position, direction, err = parse_ordre(position, direction, ordre)
 
-        if err == OrdreInvalideErreur:
-            return (None, f"L'ordre n°{i + 1} ({ordre}) est invalide.")
+        if not err == None:
+            return (None, err)
 
         y, x = position
         # On vérifie si le minautore est rentrer dans un mur
         if not grille[y][x] == 99:
-            return (None, f"L'ordre n°{i+1} ({ordre}) mène dans le mur: [{x:02d}, {y:02d}]")
+            return (None, MurErreur)
 
     return (position,  None)
 
 OrdreInvalideErreur = "ordre invalide"
 
+# 
 def parse_ordre(position, direction, ordre):
     # On avance
     if ordre == "T":
