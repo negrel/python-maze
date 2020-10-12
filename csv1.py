@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+
+
+@author: florian
+"""
 def readcsv(filename):
     matrice = []
 
@@ -13,23 +20,41 @@ def readcsv(filename):
     matrice = matrice[1:]
     return matrice
 
-matrice = readcsv('./example/example1.csv')
+matrice = readcsv('./exemple/exemple1.csv')
 print(matrice)
 
-def printcsv(matrice, mur, vide):
-    # On regarde la ligne 
+
+def printcsv(matrice, mur, vide, cDepart, cArrivee, position, cMinotaure):
+    i, j = 0, 0
     for ligne in matrice:
         s = ''
         # On regarde dans la cellule 
         for cellule in ligne:
-            # definit si mur ou vide
-            s += mur if cellule == -1 else vide
-            
+            if (i == 1 and j == 1):
+                s += cDepart
+                s += mur
+                s += '\033[0m'
+            elif (i == len(matrice[0])-2 and j == len(matrice)-2):
+                s += cArrivee
+                s += mur
+                s += '\033[0m'
+            elif (position == (i, j)):
+                s += cMinotaure
+                s += mur
+                s += '\033[0m'
+            else:
+                s += mur if cellule == -1 else vide
+            i += 1
+        i = 0
+        j += 1
         print(s)
 
 # couleur affichage 
 MUR = '\u2588\u2588'
 VIDE = '  '
-printcsv(matrice, MUR, VIDE)
+VERT = '\033[92m'
+ROUGE = '\033[91m'
+BLEU = '\033[94m'
+printcsv(matrice, MUR, VIDE, VERT, ROUGE, (4,1), BLEU)
 
 
