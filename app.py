@@ -14,8 +14,8 @@ def cli(grille):
     csv1.printcsv(grille, start)
     print()
 
-    ordres = ""
     while True:
+        ordres = ""
         # On demande à l'utilisateur de rentrer les ordres.
         try:
             ordres = input(
