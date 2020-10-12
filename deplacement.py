@@ -18,15 +18,15 @@ def tourner(dir_actuel, droite):
         dir_actuel[i] *= -1
 
     # On inverse l'index Y et X
-    x = dir_actuel[1]
-    y = dir_actuel[0]
+    x = dir_actuel[0]
+    y = dir_actuel[1]
 
-    return [x, y]
+    return [y, x]
 
 
 # avance prend une position et une direction et avance une fois
 # dans la direction
 def avancer(position, direction):
-    x = position[0] + direction[0]
-    y = position[1] + direction[1]
-    return [x, y]
+    y = position[0] + direction[0]
+    x = position[1] + direction[1]
+    return [y, x]
