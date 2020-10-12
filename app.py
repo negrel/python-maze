@@ -3,9 +3,19 @@
 import csv1
 import solution
 import sys
+import algo_gauche
+import time
+import os
+clear = lambda: os.system('clear')
 
-filename = sys.argv[2]
-#TODO Check que le fichier existe
+# Fonction pour afficher l'aide en cas d'erreur sur l'appel du script
+def help_app():
+    print("Le script app.py prend deux arguments :");
+    print(" - Le type d'execution :")
+    print("     - play  -> Vous rentrez les déplacements et le minotaure les effectue.")
+    print("     - solve -> Le minotaure résoud le labyrinthe et vous retourne ses déplacements")
+    print(" - Le fichier .csv du labyrinthe")
+    print("ex: app.py play ./exemple/exemple1.csv")
 
 def cli(grille):
     start = [1, 1]
@@ -33,9 +43,37 @@ def cli(grille):
             print("Vous avez gagné, félicitations.")
             break
 
+def autoFind(grille):
+    mino_pos = [1, 1]
+    mino_orientation = 0
+    end = [len(grille[0])-2, len(grille)-2]
+    moves = ''
+
+    while(mino_pos[0] != end[0] or mino_pos[1] != end[1]):
+        clear()
+        csv1.printcsv(laby, mino_pos)
+        mino_pos, mino_orientation, m = algo_gauche.bougerMinotaure(laby, mino_pos, mino_orientation)
+        moves += m
+        time.sleep(0.2)
+    csv1.printcsv(laby, mino_pos)
+    print("Labyrinthe résolu en "+ str(len(moves)) +" coups.")
+    print("Liste des coups :")
+    print(moves)
+
+
+if(len(sys.argv) < 3):
+    help_app()
+    exit()
+
+filename = sys.argv[2]
+if not os.path.exists(filename):
+    print("Le fichier '"+ filename +"' n'existe pas.")
+    exit()
+
+laby = csv1.readcsv(filename)
 if(sys.argv[1] == 'play'):
-    cli(csv1.readcsv(filename))
+    cli(laby)
 elif(sys.argv[1] == 'solve'):
-    print("Not yet")
+    autoFind(laby)
 else:
     print("Play ou Solve en argument")
