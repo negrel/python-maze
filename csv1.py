@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-@author: florian
-"""
 
 def readcsv(filename):
     matrice = []
 
-    with open(filename,'r') as fic:
+    with open(filename, 'r') as fic:
         # On parcourt chaque ligne du CSV
         for ligne in fic:
             # Pour chaque ligne, on split le string de la cellule qu'on convertit
@@ -19,8 +15,7 @@ def readcsv(filename):
     matrice = matrice[1:]
     return matrice
 
-
-def printcsv(matrice, cDepart, cArrivee, position, cMinotaure, mur, vide):
+def printcsv(matrice, cDepart, cArrivee, position, cMinotaure, mur='\u2588\u2588', vide='  '):
     i, j = 0, 0
     for ligne in matrice:
         s = ''
