@@ -29,4 +29,4 @@ def cli(grille):
             print("Vous avez gagné, félicitations.")
             break
 
-cli(csv1.readcsv("./exemple/exemple1.csv"), [1, 1], [13, 9])
+cli(csv1.readcsv("./exemple/exemple1.csv"))
