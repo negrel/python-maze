@@ -16,7 +16,7 @@ def readcsv(filename):
 matrice = readcsv('./exemple/exemple1.csv')
 print(matrice)
 
-<<<<<<< HEAD
+
 def printcsv(matrice, mur, vide, cDepart, cArrivee):
     i, j = 0, 0
     for ligne in matrice:
