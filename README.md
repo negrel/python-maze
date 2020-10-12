@@ -25,7 +25,4 @@ Prof
 
 Langages de programmations :
 -----------
-
 Python
-
-Technologies :
