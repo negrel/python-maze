@@ -19,9 +19,6 @@ def readcsv(filename):
     matrice = matrice[1:]
     return matrice
 
-#matrice = readcsv('./exemple/exemple1.csv')
-#print(matrice)
-
 
 def printcsv(matrice, cDepart, cArrivee, position, cMinotaure, mur, vide):
     i, j = 0, 0
@@ -47,13 +44,3 @@ def printcsv(matrice, cDepart, cArrivee, position, cMinotaure, mur, vide):
         i = 0
         j += 1
         print(s)
-
-# couleur affichage
-#MUR = '\u2588\u2588'
-#VIDE = '  '
-#VERT = '\033[92m'
-#ROUGE = '\033[91m'
-#BLEU = '\033[94m'
-#printcsv(matrice, VERT, ROUGE, (4,1), BLEU, MUR, VIDE)
-
-
