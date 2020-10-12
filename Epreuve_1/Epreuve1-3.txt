@@ -16,15 +16,15 @@ def CreationChaine(Tab,x,y,ValeurPosition):
     Tab[y][x]=ValeurPosition
     ChaineCaractere = []
 
-# Si x+1 est plus grande que ValeurPosition
+# Si y+1 est plus grande que ValeurPosition
         if (Tab[y+1][x]>ValeurPosition):
             CreationChaine (ChaineCaractere.append(D))
         
-# Si x-1 est plus grande que ValeurPosition
+# Si y-1 est plus grande que ValeurPosition
         if (Tab[y-1][x]>ValeurPosition):
         	CreationChaine (ChaineCaractere.append(G))
             
-# Si y+1 est plus grande que ValeurPosition
+# Si x+1 est plus grande que ValeurPosition
         if (Tab[y][x+1]>ValeurPosition):
     	   	CreationChaine (ChaineCaractere.append(T))
 	
