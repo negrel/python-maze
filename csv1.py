@@ -15,7 +15,7 @@ def readcsv(filename):
     matrice = matrice[1:]
     return matrice
 
-def printcsv(matrice, cDepart, cArrivee, position, cMinotaure, mur='\u2588\u2588', vide='  '):
+def printcsv(matrice, position, cDepart='\033[92m', cArrivee='\033[94m', cMinotaure='\033[91m', mur='\u2588\u2588', vide='  '):
     i, j = 0, 0
     for ligne in matrice:
         s = ''
