@@ -14,8 +14,25 @@ def readcsv(filename):
     matrice = matrice[1:]
     
     return matrice
-        
-        
+matrice = readcsv('Laby exemple.csv')
+print(matrice)
 
-print(readcsv('Laby exemple.csv'))    
 
+
+def printcsv(matrice, mur, vide):
+    
+    
+    for ligne in matrice:
+        s = ''
+        for cellule in ligne:
+            
+            if cellule == -1:
+                s += mur
+        
+            elif cellule == 99:
+                s += vide
+            
+        print(s)
+
+printcsv(matrice, '\u2588' + '\u2588', '  ')
+            
