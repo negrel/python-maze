@@ -5,7 +5,7 @@ import solution
 
 def cli(grille):
     start = [1, 1]
-    end = [len(grille)-1, len(grille[0])-1]
+    end = [len(grille)-2, len(grille[0])-2]
 
     csv1.printcsv(grille, start)
     print()
