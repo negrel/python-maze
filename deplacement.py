@@ -12,6 +12,8 @@ directions = {
 # tourner prend une direction en paramètre et retourne une direction
 # de 90° vers la droite ou la gauche.
 def tourner(dir_actuel, droite):
+    dir_actuel = dir_actuel.copy()
+
     # On inverse le signe si necessaire
     i = int(not droite)
     if not dir_actuel[i] == 0:

@@ -8,14 +8,14 @@ def TestTourner():
 
   for i, nom in enumerate(nom_directions):
     expected = directions[nom_directions[(i + 1) % 4]]
-    actual = tourner(directions[nom].copy(), droite=True)
+    actual = tourner(directions[nom], droite=True)
 
     if not expected == actual :
       raise Exception("Erreur: tourner à droite")
 
   for i, nom in enumerate(nom_directions):
     expected = directions[nom_directions[(i - 1) % 4]]
-    actual = tourner(directions[nom].copy(), droite=False)
+    actual = tourner(directions[nom], droite=False)
 
     if not expected == actual:
       raise Exception("Erreur: tourner à gauche")
