@@ -29,7 +29,7 @@ def printcsv(matrice, position, cDepart='\033[92m', cArrivee='\033[94m', cMinota
                 s += cArrivee
                 s += mur
                 s += '\033[0m'
-            elif (position == (i, j)):
+            elif (position[0] == i and position[1] == j):
                 s += cMinotaure
                 s += mur
                 s += '\033[0m'
