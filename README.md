@@ -4,7 +4,10 @@ Projet d'intégrationer 1 année  "labyrinthe"
 Contexte : 
 -----------
 
-Epreuve 1 : Traverser un labyrinthe Un labyrinthe est représenté par une matrice m×n dans laquelle les cases remplies de 99 
+Epreuve 1 : 
+-----------
+
+Traverser un labyrinthe Un labyrinthe est représenté par une matrice m×n dans laquelle les cases remplies de 99 
 sont accessibles, celles remplies d'un -1 ne le sont pas. Les bords sont intégralement 
 remplis avec des -1 pour éviter les problèmes de débordement. 
 
