@@ -17,12 +17,17 @@ matrice = readcsv('./example/example1.csv')
 print(matrice)
 
 def printcsv(matrice, mur, vide):
+    # On regarde la ligne 
     for ligne in matrice:
         s = ''
+        # On regarde dans la cellule 
         for cellule in ligne:
+            # definit si mur ou vide
             s += mur if cellule == -1 else vide
+            
         print(s)
 
+# couleur affichage 
 MUR = '\u2588\u2588'
 VIDE = '  '
 printcsv(matrice, MUR, VIDE)
