@@ -1,31 +1,20 @@
-G : tourner à gauche
-D : tourner à droite
-T : aller tout droit (1case)
+def CreationChaine():
+#G : tourner à gauche
+#D : tourner à droite
+#T : aller tout droit (1case)
 
-chaîne d’ordres : GTDTDT
- 
-SortirLabyrinthe()
-tourner à gauche "90°"
-chaîne d’ordres <- ajout G 
 
-si (T = false)
-	tourne à droite "90°"
-	chaîne d’ordres <- chaîne d’ordres + D
+Tab[y][x]=ValeurPosition
+ChaineCaractere = []
 
-	si (T = false)
-		tourner à droite "90°"
-		chaîne d’ordres <- chaîne d’ordres + D
-		
-	sinon
-		avanvce 1 case
-		chaîne d’ordres <- chaîne d’ordres + T
-		return SortirLabyrinthe
-
-si (T = true)
-	avance 1 case
-	chaîne d’ordres <- chaîne d’ordres + T
-	return SortirLabyrinthe
+si (Tab[y+1][x]>ValeurPosition) // Si x+1 est plus grande que ValeurPosition
+	ChaineCaractere.append(D)
 	
+si (Tab[y-1][x]>ValeurPosition) // Si x-1 est plus grande que ValeurPosition
+	ChaineCaractere.append(G)
+	
+si (Tab[y][x+1]>ValeurPosition) // Si y+1 est plus grande que ValeurPosition
+	Chain
 	
 
 	
