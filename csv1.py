@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-
-
 @author: florian
 """
+
 def readcsv(filename):
     matrice = []
 
@@ -20,11 +19,8 @@ def readcsv(filename):
     matrice = matrice[1:]
     return matrice
 
-matrice = readcsv('./exemple/exemple1.csv')
-print(matrice)
 
-
-def printcsv(matrice, mur, vide, cDepart, cArrivee, position, cMinotaure):
+def printcsv(matrice, cDepart, cArrivee, position, cMinotaure, mur, vide):
     i, j = 0, 0
     for ligne in matrice:
         s = ''
@@ -48,13 +44,3 @@ def printcsv(matrice, mur, vide, cDepart, cArrivee, position, cMinotaure):
         i = 0
         j += 1
         print(s)
-
-# couleur affichage 
-MUR = '\u2588\u2588'
-VIDE = '  '
-VERT = '\033[92m'
-ROUGE = '\033[91m'
-BLEU = '\033[94m'
-printcsv(matrice, MUR, VIDE, VERT, ROUGE, (4,1), BLEU)
-
-
