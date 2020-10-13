@@ -22,6 +22,30 @@ Par exemple, G pour tourner dans la cellule à gauche, D pour tourner dans la ce
 Par exemple : TTGTDTTDTTTG 4.Savoir lire un ensemble d’ordre sous le format ci dessus, en ligne de commande, et l’exécuter 
 dans le labyrinthe en affichant le déplacement effectif et les erreurs si il y en a.
 
+## Étape 1: Charger un fichier CSV et l’afficher
+> Florian MARTIN, Eliot MARECHAL
+
+Implémenté dans `utils.py`
+
+## Étape 2: Algorithme du "mur gauche"
+> Chrisophe BALLAIRE, Eliot MARECHAL, Alexandre NEGREL
+
+Il y a 3 implémentations différente dans `resolveur.py`
+
+## Étape 3: Affiche la suite des directions
+> Romain VIVIEN
+
+Implémenté dans `déplacement.py`
+
+## Étape 4: Vérifie qu'une suite d'instructions données mène à la sortie
+> Alexandre NEGREL
+
+Implémenté dans `solution.py`
+
+## Étape intégration
+> Chrisophe BALLAIRE, Eliot MARECHAL, Alexandre NEGREL, Romain VIVIEN
+
+Implémentés dans `app.py`
 
 Auteurs 
 -----------
