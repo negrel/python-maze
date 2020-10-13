@@ -1,42 +1,38 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from deplacement import *
 """
 Created on Mon Oct 12 11:42:08 2020
 @author: vivien
 """
-#         'T'
-#         y-1
-# 'G' x-1       x+1 - 'D'
-#         y+1
-#         'T'
-
 # La fontion parcous le tableau et ajoute les caractères en fonction de l'endroit ou se situe le minautore.
-def CreationChaine(Tab,x,y,Position): 
-#G : tourner à gauche
-#D : tourner à droite
-#T : aller tout droit (1case)
-    Position = Tab[y][x]
-    ChaineCaractere = []
-    
-    # Si y-1 est plus grande que Position
-    if (int(Tab[y-1][x]>Position)):
-        Position == [y-1][x]
-        ChaineCaractere.append('T')
-        
-    # Si y+1 est plus grande que Position
-    if (int(Tab[y+1][x]>Position)):
-        Position == [y+1][x]
-        ChaineCaractere.append('T')
+def direction(chemin):
+    list_direction = ""
 
-    # Si x-1 est plus grande que Position
-    if (int(Tab[y][x-1]>Position)):
-        Position == [y][x-1]
-        ChaineCaractere.append('G')
-            
-    # Si x+1 est plus grande que Position
-    if (int(Tab[y][x+1]>Position)):
-        Position == [y][x+1]
-        ChaineCaractere.append('D')
-    return ChaineCaractere
+    start = chemin[0]
+    position = start
+    direction = directions["DROITE"]
 
+    for case in chemin[1:]:
+        # Calcule la différence entre la position précedente et la position actuelle
+        # pour deteriner la direction.
+        nouvelle_direction = [case[0] - position[0], case[1] - position[1]]
 
+        # Si la nouvelle direction et égale a la direction précédente tourner à gauche
+        if nouvelle_direction == tourner(direction, droite=False):
+            list_direction = list_direction + "G"
+        # Pareil mais à droite
+        elif nouvelle_direction == tourner(direction, droite=True):
+            list_direction = list_direction + "D"
+        # Demi tour si cul de sac
+        elif nouvelle_direction == demitour(direction):
+            list_direction = list_direction + "DD"
+
+        # Dans tout les cas on avance
+        list_direction = list_direction + "T"
+
+        # On met a jour les infos
+        direction = nouvelle_direction
+        position = case
+
+    return list_direction
