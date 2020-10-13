@@ -45,7 +45,7 @@ Implémenté dans `solution.py`
 ## Étape intégration
 > Chrisophe BALLAIRE, Eliot MARECHAL, Alexandre NEGREL, Romain VIVIEN
 
-Implémentés dans `app.py`
+Implémenté dans `app.py`
 
 Auteurs 
 -----------
