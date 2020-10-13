@@ -6,23 +6,30 @@ clear = lambda: os.system('clear')
 
 
 def mur_gauche(grille, update):
+    # On définit le point de départ et de fin du labyrinthe
     start = [1, 1]
     end = [len(grille) - 2, len(grille[0]) - 2]
 
+    # Liste des cases par lequel ils passent
     chemin = [start]
 
+    # Position et direction du minautore
     position = start
     direction = directions["DROITE"]
 
     while not position == end:
+        # On essaie de tourner à gauche
         nouvelle_direction = tourner(direction, droite=False)
         y, x = avancer(position, nouvelle_direction)
 
+        # On peut tourner a gauche
         if grille[y][x] == 99:
             direction = nouvelle_direction
             position = [y, x]
+            # On ajoute la case au chemin
             chemin.append(position)
         else:
+            # On tourne à droite
             direction = tourner(direction, droite=True)
 
         # On affiche a l'écran le labyrinthe
@@ -119,8 +126,8 @@ def __mur_gauche_(grille, update):
     while (mino_pos[0] != end[0] or mino_pos[1] != end[1]):
         update(grille, mino_pos)
         # On bouge le minotaure est on récupère ses nouvelles informations
-        mino_pos, mino_orientation = __bougerMinotaure(
-            grille, mino_pos, mino_orientation)
+        mino_pos, mino_orientation = __bougerMinotaure(grille, mino_pos,
+                                                       mino_orientation)
     # On réaffiche une dernière fois pour voir le minot aure sur l'arrivée
     print_maze(grille, mino_pos)
 
