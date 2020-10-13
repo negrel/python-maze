@@ -3,6 +3,7 @@
 ## Sommaire:
 - Lancer le programme
 - Epreuve 1
+- Epreuve 2
 - Explication
     - Algorithme du mur gauche
 - Auteurs
@@ -29,7 +30,7 @@ On suppose que le minotaure ne peut se déplacer que dans 4 directions : haut, b
 Dans notre exemple il entre par la case [1;1] et doit sortir par la case [m-2;n-2]. Rendu le 13/10 à 12h max via moodle 
 Projet d'intégration informatique MSIR1A 2020 Milles
 
-S1 Liste des programmes à fournir: 
+Liste des programmes à fournir: 
 - Charger un fichier CSV et l’afficher
     - Implémenté dans `utils.py` (Florian MARTIN, Eliot MARECHAL)
 
@@ -42,6 +43,23 @@ Par exemple : TTGTDTTDTTTG.
     - Implémenté dans `solution.py` (Alexandre NEGREL)
 - Intégration
     - Implémenté dans `app.py` (Chrisophe BALLAIRE, Eliot MARECHAL, Alexandre NEGREL, Romain VIVIEN)
+
+## Epreuve 2 :
+
+Vous devez maintenant proposer un algorithme qui trouve le chemin le plus court entre le
+départ et l’arrivée …. le minotaure n’étant pas endurant, ce sera plus efficace.
+
+Vous devez modifier le tableau laby de manière à faire apparaître le plus
+court chemin vers la sortie pour ensuite indiquer la trajectoire au minotaure. Pour ce faire,
+on partira de la sortie (qui sera notée 1) et on appellera récursivement votre fonction sur
+chacune des cases adjacentes atteignables (i.e. ≠ -1) dont la distance à la sortie est moins
+bonne que la distance calculée.
+
+Liste des programmes à fournir:
+- Une documentation expliquant l'algorithme
+- L'implémentation python de l'algorithme
+- Une animation graphique de la progression de l'algorithme
+- Les ordres générer au format TTGTTDTT...
 
 ## Explication
 ### Algorithme du `mur gauche`:
