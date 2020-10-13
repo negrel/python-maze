@@ -145,3 +145,6 @@ def __bougerMinotaure(matrice, position, dir):
         if (matrice[offset_y][offset_x] == 99):
             return ([offset_x, offset_y], (dir + i) % 4)
         # Sinon, on continue de tourner dans la for jusqu'à trouver une case vide.
+
+def trajet_court(grille):
+    # TODO Implementer l'algorithme du trajet le plus court
