@@ -47,6 +47,13 @@ Implémenté dans `solution.py`
 
 Implémenté dans `app.py`
 
+## Lancer le programme:
+
+Il faut d'abord installer les dépendances:
+```bash
+pip install -r requirements.txt
+```
+
 Auteurs 
 -----------
  - Romain VIVIEN
