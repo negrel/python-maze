@@ -146,5 +146,35 @@ def __bougerMinotaure(matrice, position, dir):
             return ([offset_x, offset_y], (dir + i) % 4)
         # Sinon, on continue de tourner dans la for jusqu'à trouver une case vide.
 
-def trajet_court(grille):
-    # TODO Implementer l'algorithme du trajet le plus court
+# Parours la grille et remplis les case avec la distance entre cette dernière et la 
+# sortie.
+def find_short_path(grille, precedente_pos, actuel_pos, distance):
+    # On insère la distance entre la case actuel et la sortie
+    y, x = actuel_pos
+    grille[y][x] = distance
+
+    # On essaie toute les positions possible
+    for prochaine_position in position_possible(grille, actuel_pos):
+        # On vérifie qu'on ne reviens pas en arrière
+        if precedente_pos == prochaine_position:
+            continue
+
+        y, x = prochaine_position
+        # Si la case est libre, on appelle récursivement cette fonction
+        if grille[y][x] > distance or grille[y][x] == 99:
+            find_short_path(grille, actuel_pos, prochaine_position, distance + 1)
+
+
+# Retourne les prochaine position possible depuis la position donnée en paramètre.
+def position_possible(grille, position):
+    pos_possible = []
+
+    if position == [1, 1]:
+        return pos_possible
+
+    for dir in directions.values():
+        y, x = avancer(position, dir)
+        if not grille[y][x] == -1:
+            pos_possible.append([y, x])
+
+    return pos_possible
