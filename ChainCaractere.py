@@ -5,7 +5,6 @@ from deplacement import *
 Created on Mon Oct 12 11:42:08 2020
 @author: vivien
 """
-# La fontion parcous le tableau et ajoute les caractères en fonction de l'endroit ou se situe le minautore.
 def direction(chemin):
     list_direction = ""
 
