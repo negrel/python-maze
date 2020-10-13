@@ -1,3 +1,8 @@
+import time
+import os
+clear = lambda: os.system('clear')
+
+
 def print_maze(matrice,
                position,
                cDepart='\033[92m',
@@ -17,7 +22,7 @@ def print_maze(matrice,
                 s += cMinotaure
                 s += mur
                 s += '\033[0m'
-            elif (i == len(matrice[0]) - 2 and j == len(matrice) - 2):
+            elif (j == len(matrice[0]) - 2 and i == len(matrice) - 2):
                 s += cArrivee
                 s += mur
                 s += '\033[0m'
@@ -39,3 +44,16 @@ def loadcsv(filename):
     # On retire la première ligne, qui correspond aux dimensions du labyrinthe
     matrice = matrice[1:]
     return matrice
+
+
+def update(matrice,
+           position,
+           cDepart='\033[92m',
+           cArrivee='\033[94m',
+           cMinotaure='\033[91m',
+           mur='\u2588\u2588',
+           vide='  ',
+           sleep_time=0.2):
+    clear()
+    print_maze(matrice, position, cDepart, cArrivee, cMinotaure, mur, vide)
+    time.sleep(sleep_time)

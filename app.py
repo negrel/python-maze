@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import solution
 import sys
@@ -23,12 +23,11 @@ def help_app():
     print("ex: app.py play ./exemple/exemple1.csv")
 
 
-def cli(grille):
+def cli(grille, update):
     start = [1, 1]
     end = [len(grille) - 2, len(grille[0]) - 2]
 
-    utils.print_maze(grille, start)
-    print()
+    update(grille, start, sleep_time=0)
 
     while True:
         ordres = ""
@@ -65,9 +64,9 @@ if not os.path.exists(filename):
 # sur la bonne fonction
 maze = utils.loadcsv(filename)
 if (sys.argv[1] == 'play'):
-    cli(maze)
+    cli(maze, utils.update)
 elif (sys.argv[1] == 'solve'):
-    chemin = resolveur.mur_gauche(maze)
+    chemin = resolveur.mur_gauche(maze, utils.update)
     directions = deplacement.analyse_chemin(chemin)
     print(f"Le minautore a suivis le chemin suivant: \n{directions}")
 else:
