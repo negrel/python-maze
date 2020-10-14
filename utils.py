@@ -1,37 +1,17 @@
 import time
 import os
-clear = lambda: os.system('clear')
-
-
-def print_maze(matrice,
-               position,
-               cDepart='\033[92m',
-               cArrivee='\033[94m',
-               cMinotaure='\033[91m',
-               mur='\u2588\u2588',
-               vide='  '):
-    for i, ligne in enumerate(matrice):
-        s = ''
-        # On regarde dans la cellule
-        for j, cellule in enumerate(ligne):
-            if (i == 1 and j == 1):
-                s += cDepart
-                s += mur
-                s += '\033[0m'
-            elif (position[0] == i and position[1] == j):
-                s += cMinotaure
-                s += mur
-                s += '\033[0m'
-            elif (j == len(matrice[0]) - 2 and i == len(matrice) - 2):
-                s += cArrivee
-                s += mur
-                s += '\033[0m'
-            else:
-                s += mur if cellule == -1 else vide
-        print(s)
-
+import sys
 
 def loadcsv(filename):
+    # On vérifie que le fichier existe
+    filename = sys.argv[2]
+    if not os.path.exists(filename):
+        return None, f"Le fichier \"{filename}\" n'existe pas."
+
+    return opencsv(filename), None
+
+
+def opencsv(filename):
     matrice = []
     with open(filename, 'r') as fic:
         # On parcourt chaque ligne du CSV
@@ -44,16 +24,3 @@ def loadcsv(filename):
     # On retire la première ligne, qui correspond aux dimensions du labyrinthe
     matrice = matrice[1:]
     return matrice
-
-
-def update(matrice,
-           position,
-           cDepart='\033[92m',
-           cArrivee='\033[94m',
-           cMinotaure='\033[91m',
-           mur='\u2588\u2588',
-           vide='  ',
-           sleep_time=0.2):
-    clear()
-    print_maze(matrice, position, cDepart, cArrivee, cMinotaure, mur, vide)
-    time.sleep(sleep_time)
