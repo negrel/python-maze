@@ -9,101 +9,6 @@ def foreach(list, fn):
     for element in list:
         fn(element)
 
-class Application:
-    def __init__(self, name, width, height, display_mode=(pygame.HWSURFACE | pygame.DOUBLEBUF), background=(255, 255, 255)):
-        self.name = name
-        self.width = width
-        self.height = height
-
-        self.display = None
-        self._display_mode = display_mode
-        self._running = False
-        self.elements = []
-        self.background = background
-
-        self._debug = False
-
-
-    def init(self):
-        if not pygame.get_init():
-            pygame.init()
-        if not pygame.font.get_init():
-            pygame.font.init()
-
-        pygame.display.set_caption(self.name)
-        self.display = pygame.display.set_mode((self.width, self.height), self._display_mode)
-        self._running = True
-
-
-    def debug(self, enable):
-        self._debug = enable
-
-    def onevent(self, event):
-        if self._debug:
-            print(event)
-
-        if event.type == pygame.QUIT:
-            foreach(self.elements, lambda el: el.on_quit(event))
-            self.quit()
-
-        elif event.type == pygame.ACTIVEEVENT:
-            foreach(self.elements, lambda el: el.on_active(event))
-        elif event.type == pygame.KEYDOWN:
-            foreach(self.elements, lambda el: el.on_key_down(event))
-        elif event.type == pygame.KEYUP:
-            foreach(self.elements, lambda el: el.on_key_up(event))
-        elif event.type == pygame.MOUSEMOTION:
-            foreach(self.elements, lambda el: el.on_mouse_motion(event))
-        elif event.type == pygame.MOUSEBUTTONUP:
-            foreach(self.elements, lambda el: el.on_mouse_button_up(event))
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            foreach(self.elements, lambda el: el.on_mouse_button_down(event))
-        elif event.type == pygame.VIDEOEXPOSE:
-            foreach(self.elements, lambda el: el.on_video_expose(event))
-        elif event.type == pygame.VIDEORESIZE:
-            foreach(self.elements, lambda el: el.on_video_resize(event))
-
-    def quit(self):
-        self._running = False
-        if pygame.get_init():
-            pygame.quit()
-        if pygame.font.get_init():
-            pygame.font.quit()
-
-    def update(self):
-        foreach(self.elements, lambda el: el.draw(self.display))
-
-    def start(self):
-        self.init()
-
-        while self._running:
-            self.display.fill(self.background)
-            # On met à jour les composants
-            self.update()
-
-            # On met à jour la fenêtre
-            pygame.display.update()
-
-            # On boucle à travers tout les évenements
-            for event in pygame.event.get():
-                self.onevent(event)
-
-    def insertElement(self, index, element):
-        self.elements.insert(index, element)
-
-    def appendElement(self, element):
-        self.elements.append(element)
-
-    def removeElement(self, element):
-        if element in self.elements:
-            self.elements.remove(element)
-
-    def get_display(self):
-        return self.display
-
-    def get_size(self):
-        return (self.width, self.height)
-
 class Element:
     def __init__(self, x, y, width, height):
         self.x = x
@@ -176,6 +81,110 @@ class Rect(Element, pygame.Rect):
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.background, self, self.border)
+
+class Page(Rect):
+    def __init__(self, name, background=(255, 255, 255)):
+        super().__init__(0, 0, 0, 0, background, 0)
+
+        self.name = name
+        self.elements = []
+        self.background = background
+
+    def _dispatch_event(self, event):
+        if event.type == pygame.QUIT:
+            foreach(self.elements, lambda el: el.on_quit(event))
+            self.quit()
+
+        elif event.type == pygame.ACTIVEEVENT:
+            foreach(self.elements, lambda el: el.on_active(event))
+        elif event.type == pygame.KEYDOWN:
+            foreach(self.elements, lambda el: el.on_key_down(event))
+        elif event.type == pygame.KEYUP:
+            foreach(self.elements, lambda el: el.on_key_up(event))
+        elif event.type == pygame.MOUSEMOTION:
+            foreach(self.elements, lambda el: el.on_mouse_motion(event))
+        elif event.type == pygame.MOUSEBUTTONUP:
+            foreach(self.elements, lambda el: el.on_mouse_button_up(event))
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            foreach(self.elements, lambda el: el.on_mouse_button_down(event))
+        elif event.type == pygame.VIDEOEXPOSE:
+            foreach(self.elements, lambda el: el.on_video_expose(event))
+        elif event.type == pygame.VIDEORESIZE:
+            foreach(self.elements, lambda el: el.on_video_resize(event))
+
+
+    def draw(self, surface):
+        foreach(self.elements, lambda el: el.draw(surface))
+
+    def insertElement(self, index, element):
+        self.elements.insert(index, element)
+
+    def appendElement(self, element):
+        self.elements.append(element)
+
+    def removeElement(self, element):
+        if element in self.elements:
+            self.elements.remove(element)
+
+
+class Application(Page):
+    def __init__(self, name, width, height, display_mode=(pygame.HWSURFACE | pygame.DOUBLEBUF), background=(255, 255, 255)):
+        super().__init__(name, background)
+
+        self.width = width
+        self.height = height
+
+        self.display = None
+        self._display_mode = display_mode
+        self._running = False
+        self._debug = False
+        self._active_index = None
+        self.elements = None
+        self.page = None
+
+
+    def init(self):
+        if not pygame.get_init():
+            pygame.init()
+        if not pygame.font.get_init():
+            pygame.font.init()
+
+        self.display = pygame.display.set_mode((self.width, self.height), self._display_mode)
+        self._running = True
+
+
+    def debug(self, enable):
+        self._debug = enable
+
+    def quit(self):
+        self._running = False
+        if pygame.get_init():
+            pygame.quit()
+        if pygame.font.get_init():
+            pygame.font.quit()
+
+    def start(self):
+        self.init()
+
+        while self._running:
+            pygame.display.set_caption(f"{self.name} - {self.page.name}")
+            self.display.fill(self.background)
+
+            # On met à jour la page
+            self.page.draw(self.display)
+
+            # On met à jour la fenêtre
+            pygame.display.update()
+
+            # On boucle à travers tout les évenements
+            for event in pygame.event.get():
+                if self._debug:
+                    print(event)
+                self.page._dispatch_event(event)
+
+    def set_page(self, page):
+        self.page = page
+        page.width, page.height = self.width, self.height
 
 class Button(Rect):
     def __init__ (self, x, y, width, height, label, onclick, background=(128, 128, 128), border=0, color=(255, 255, 255)):
