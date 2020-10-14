@@ -48,7 +48,7 @@ def cli(grille, update):
             break
 
 
-# S'il y a moins de deux argument utilisateur, on affiche l'aide et on quitte
+# S'il y a moins de deux arguments utilisateur, on affiche l'aide et on quitte
 # (Le premier argument est le nom du script)
 if (len(sys.argv) < 3):
     help_app()

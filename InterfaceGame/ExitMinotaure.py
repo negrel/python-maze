@@ -13,6 +13,7 @@ image = pygame.image.load("InterfaceGame/Assets/Image/minotaure.png")
 while continuer:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             continuer = False
 
 pygame.quit()

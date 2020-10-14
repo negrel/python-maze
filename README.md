@@ -3,9 +3,11 @@
 ## Sommaire:
 - Lancer le programme
 - Epreuve 1
+    - Explication
+        - Algorithme du mur gauche
 - Epreuve 2
-- Explication
-    - Algorithme du mur gauche
+    - Explication
+        - Algorithme chemin le plus court
 - Auteurs
 - Professeurs
 
@@ -43,23 +45,6 @@ Par exemple : TTGTDTTDTTTG.
     - Implémenté dans `solution.py` (Alexandre NEGREL)
 - Intégration
     - Implémenté dans `app.py` (Chrisophe BALLAIRE, Eliot MARECHAL, Alexandre NEGREL, Romain VIVIEN)
-
-## Epreuve 2 :
-
-Vous devez maintenant proposer un algorithme qui trouve le chemin le plus court entre le
-départ et l’arrivée …. le minotaure n’étant pas endurant, ce sera plus efficace.
-
-Vous devez modifier le tableau laby de manière à faire apparaître le plus
-court chemin vers la sortie pour ensuite indiquer la trajectoire au minotaure. Pour ce faire,
-on partira de la sortie (qui sera notée 1) et on appellera récursivement votre fonction sur
-chacune des cases adjacentes atteignables (i.e. ≠ -1) dont la distance à la sortie est moins
-bonne que la distance calculée.
-
-Liste des programmes à fournir:
-- Une documentation expliquant l'algorithme
-- L'implémentation python de l'algorithme
-- Une animation graphique de la progression de l'algorithme
-- Les ordres générer au format TTGTTDTT...
 
 ## Explication
 ### Algorithme du `mur gauche`:
@@ -137,6 +122,102 @@ function tourner(dir_actuel: [2]int, droite: boolean)
     y <- dir_actuel[1]
 
     return [y, x]
+
+
+```
+
+
+## Epreuve 2 :
+
+Vous devez maintenant proposer un algorithme qui trouve le chemin le plus court entre le
+départ et l’arrivée …. le minotaure n’étant pas endurant, ce sera plus efficace.
+
+Vous devez modifier le tableau laby de manière à faire apparaître le plus
+court chemin vers la sortie pour ensuite indiquer la trajectoire au minotaure. Pour ce faire,
+on partira de la sortie (qui sera notée 1) et on appellera récursivement votre fonction sur
+chacune des cases adjacentes atteignables (i.e. ≠ -1) dont la distance à la sortie est moins
+bonne que la distance calculée.
+
+Liste des programmes à fournir:
+- Une documentation expliquant l'algorithme
+- L'implémentation python de l'algorithme
+- Une animation graphique de la progression de l'algorithme
+- Les ordres générer au format TTGTTDTT...
+
+## Explication
+### Algorithme du `Chemin le plus court`:
+L'algorithme du chemin le plus court consiste à sortir le plus éfficacement du labyrinthe.
+
+```python
+
+# Trouve la sortie en utilisant le chemin le plus court
+def plus_court_chemin(grille, update):
+    # On définit le point de départ et de fin du labyrinthe
+    start = [1, 1]
+    end = [len(grille) - 2, len(grille[0]) - 2]
+
+    # Liste des cases par lequel ils passent
+    chemin = [start]
+
+    # Position et direction du minautore
+    position = start
+    direction = directions["DROITE"]
+
+    # On trouve le chemin le plus court
+    __trouver_chemin_plus_court(grille, end, end, 1)
+
+
+    while not position == end:
+        # On regarde le chemin le plus court parmis les chemins
+        # valide.
+        for y, x in __position_possible(grille, position):
+            # Si le chemin est plus court
+            if grille[y][x] < grille[position[0]][position[1]]:
+                # On choisit ce chemin
+                position = [y, x]
+                
+        # Mise à jour de la position dans la grille
+        update(grille, position)
+
+        # Add la position dans chemin
+        chemin.append(position)
+
+    return chemin
+
+
+
+# Parours la grille et remplis les case avec la distance entre cette dernière et la 
+# sortie.
+def __trouver_chemin_plus_court(grille, precedente_pos, actuel_pos, distance):
+    # On insère la distance entre la case actuel et la sortie
+    y, x = actuel_pos
+    grille[y][x] = distance
+
+    if actuel_pos == [1, 1]:
+        return
+
+    # On essaie toute les positions possible
+    for prochaine_position in __position_possible(grille, actuel_pos):
+        # On vérifie qu'on ne reviens pas en arrière
+        if precedente_pos == prochaine_position:
+            continue
+
+        y, x = prochaine_position
+        # Si la case est libre, on appelle récursivement cette fonction
+        if grille[y][x] > distance or grille[y][x] == 99:
+            __trouver_chemin_plus_court(grille, actuel_pos, prochaine_position, distance + 1)
+
+
+# Retourne les prochaine position possible depuis la position donnée en paramètre.
+def __position_possible(grille, position):
+    pos_possible = []
+
+    for dir in directions.values():
+        y, x = avancer(position, dir)
+        if not grille[y][x] == -1:
+            pos_possible.append([y, x])
+
+    return pos_possible
 ```
 
 ## Auteurs 
