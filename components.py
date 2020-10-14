@@ -2,7 +2,7 @@ import pygame
 
 pygame.font.init()
 DEFAULT_FONT_NAME = pygame.font.get_default_font()
-DEFAULT_FONT_SIZE = 64
+DEFAULT_FONT_SIZE = 36
 DEFAULT_FONT = pygame.font.SysFont(DEFAULT_FONT_NAME, DEFAULT_FONT_SIZE)
 
 def foreach(list, fn):
@@ -33,8 +33,6 @@ class Application:
         pygame.display.set_caption(self.name)
         self.display = pygame.display.set_mode((self.width, self.height), self._display_mode)
         self._running = True
-
-        self.display.fill(self.background)
 
 
     def debug(self, enable):
@@ -79,6 +77,7 @@ class Application:
         self.init()
 
         while self._running:
+            self.display.fill(self.background)
             # On met à jour les composants
             self.update()
 
@@ -94,6 +93,10 @@ class Application:
 
     def appendElement(self, element):
         self.elements.append(element)
+
+    def removeElement(self, element):
+        if element in self.elements:
+            self.elements.remove(element)
 
     def get_display(self):
         return self.display
@@ -176,9 +179,18 @@ class Rect(Element, pygame.Rect):
 
 class Button(Rect):
     def __init__ (self, x, y, width, height, label, onclick, background=(128, 128, 128), border=0, color=(255, 255, 255)):
-        super().__init__(x, y, width, height, background, border)
+        # On coupe le label si il n'y a pas assez de place
+        # et on ajoute "..."
         self.text = Text(x, y, label, color=color)
+        w, _ = self.text.get_size()
+        if w > width:
+            label = label[:-4] + "..."
+            self.text = Button(x, y, width, height, label, onclick, background=background, border=border, color=color).text
+
+        super().__init__(x, y, width, height, background, border)
         self.onclick = onclick
+
+
 
     def copy(self):
         left, top = self.get_origin_pos()
