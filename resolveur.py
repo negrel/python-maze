@@ -158,7 +158,7 @@ def plus_court_chemin(grille):
     direction = directions["DROITE"]
 
     # On trouve le chemin le plus court
-    __trouver_chemin_plus_court(grille, end, end, 1)
+    __trouver_chemin_plus_court(grille, end, 1)
 
     while not position == end:
         # On regarde le chemin le plus court parmis les chemins
@@ -189,7 +189,7 @@ def __trouver_chemin_plus_court(grille, actuel_pos, distance):
         y, x = prochaine_position
         # Si la case est libre, on appelle récursivement cette fonction
         if grille[y][x] > distance:
-           return __trouver_chemin_plus_court(grille, actuel_pos, prochaine_position, distance + 1)
+           return __trouver_chemin_plus_court(grille, prochaine_position, distance + 1)
 
 
 # Retourne les prochaine position possible depuis la position donnée en paramètre.
