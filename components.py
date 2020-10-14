@@ -5,9 +5,11 @@ DEFAULT_FONT_NAME = pygame.font.get_default_font()
 DEFAULT_FONT_SIZE = 36
 DEFAULT_FONT = pygame.font.SysFont(DEFAULT_FONT_NAME, DEFAULT_FONT_SIZE)
 
+
 def foreach(list, fn):
     for element in list:
         fn(element)
+
 
 class Element:
     def __init__(self, x, y, width, height):
@@ -24,7 +26,6 @@ class Element:
 
     def get_pos(self):
         return ((self.x - self.width / 2), (self.y - self.height / 2))
-
 
     def get_size(self):
         return (self.width, self.height)
@@ -70,25 +71,34 @@ class Element:
     def on_video_resize(self, event):
         pass
 
+
 class Rect(Element, pygame.Rect):
-    def __init__(self, x, y, width, height, background=(255, 255, 255), border=0):
+    def __init__(self,
+                 x,
+                 y,
+                 width,
+                 height,
+                 background=(255, 255, 255),
+                 border=0):
         super().__init__(x, y, width, height)
         self.background = background
         self.border = border
 
     def copy(self):
-        return Rect(self.x, self.y, self.width, self.height, self.background, self.border)
+        return Rect(self.x, self.y, self.width, self.height, self.background,
+                    self.border)
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.background, self, self.border)
+
 
 class Page(Rect):
     def __init__(self, name, background=(255, 255, 255)):
         super().__init__(0, 0, 0, 0, background, 0)
 
         self.name = name
-        self.elements = []
         self.background = background
+        self.elements = []
 
     def _dispatch_event(self, event):
         if event.type == pygame.QUIT:
@@ -112,7 +122,6 @@ class Page(Rect):
         elif event.type == pygame.VIDEORESIZE:
             foreach(self.elements, lambda el: el.on_video_resize(event))
 
-
     def draw(self, surface):
         foreach(self.elements, lambda el: el.draw(surface))
 
@@ -128,7 +137,12 @@ class Page(Rect):
 
 
 class Application(Page):
-    def __init__(self, name, width, height, display_mode=(pygame.HWSURFACE | pygame.DOUBLEBUF), background=(255, 255, 255)):
+    def __init__(self,
+                 name,
+                 width,
+                 height,
+                 display_mode=(pygame.HWSURFACE | pygame.DOUBLEBUF),
+                 background=(255, 255, 255)):
         super().__init__(name, background)
 
         self.width = width
@@ -138,10 +152,7 @@ class Application(Page):
         self._display_mode = display_mode
         self._running = False
         self._debug = False
-        self._active_index = None
-        self.elements = None
-        self.page = None
-
+        self.elements = []
 
     def init(self):
         if not pygame.get_init():
@@ -149,9 +160,9 @@ class Application(Page):
         if not pygame.font.get_init():
             pygame.font.init()
 
-        self.display = pygame.display.set_mode((self.width, self.height), self._display_mode)
+        self.display = pygame.display.set_mode((self.width, self.height),
+                                               self._display_mode)
         self._running = True
-
 
     def debug(self, enable):
         self._debug = enable
@@ -167,11 +178,11 @@ class Application(Page):
         self.init()
 
         while self._running:
-            pygame.display.set_caption(f"{self.name} - {self.page.name}")
+            pygame.display.set_caption(f"{self.name} - {self._page().name}")
             self.display.fill(self.background)
 
             # On met à jour la page
-            self.page.draw(self.display)
+            self._page().draw(self.display)
 
             # On met à jour la fenêtre
             pygame.display.update()
@@ -180,26 +191,66 @@ class Application(Page):
             for event in pygame.event.get():
                 if self._debug:
                     print(event)
-                self.page._dispatch_event(event)
+                self._page()._dispatch_event(event)
 
-    def set_page(self, page):
-        self.page = page
+    def push_page(self, page):
+        self.elements.append(page)
         page.width, page.height = self.width, self.height
 
+        if self._debug:
+            print("/", end="")
+            for p in self.elements:
+                print(" ->", p.name, end="")
+            print()
+
+    def pop_page(self):
+        page = self._page()
+        self.elements = self.elements[:-1]
+
+        if self._debug:
+            print("/", end="")
+            for p in self.elements:
+                print(" ->", p.name, end="")
+            print(" <-", page.name)
+
+        if len(self.elements) == 0:
+            self.quit()
+
+        return page
+
+    def _page(self):
+        return self.elements[-1]
+
+
 class Button(Rect):
-    def __init__ (self, x, y, width, height, label, onclick, background=(128, 128, 128), border=0, color=(255, 255, 255)):
+    def __init__(self,
+                 x,
+                 y,
+                 width,
+                 height,
+                 label,
+                 onclick,
+                 background=(128, 128, 128),
+                 border=0,
+                 color=(255, 255, 255)):
         # On coupe le label si il n'y a pas assez de place
         # et on ajoute "..."
         self.text = Text(x, y, label, color=color)
         w, _ = self.text.get_size()
         if w > width:
             label = label[:-4] + "..."
-            self.text = Button(x, y, width, height, label, onclick, background=background, border=border, color=color).text
+            self.text = Button(x,
+                               y,
+                               width,
+                               height,
+                               label,
+                               onclick,
+                               background=background,
+                               border=border,
+                               color=color).text
 
         super().__init__(x, y, width, height, background, border)
         self.onclick = onclick
-
-
 
     def copy(self):
         left, top = self.get_origin_pos()
@@ -214,7 +265,9 @@ class Button(Rect):
         self.text.move(x, y)
 
     def draw(self, surface):
-        pygame.draw.rect(surface, self.background, pygame.Rect(self.get_pos(), self.get_size()), self.border)
+        pygame.draw.rect(surface, self.background,
+                         pygame.Rect(self.get_pos(), self.get_size()),
+                         self.border)
         self.text.draw(surface)
 
     def on_mouse_button_up(self, event):
@@ -227,8 +280,16 @@ class Button(Rect):
         if x > left and (left + width) > x and y > top and (top + height) > y:
             self.onclick(event)
 
+
 class Text(Element):
-    def __init__ (self, x, y, label, font=DEFAULT_FONT, color=(0, 0, 0), background=None, antialias=True):
+    def __init__(self,
+                 x,
+                 y,
+                 label,
+                 font=DEFAULT_FONT,
+                 color=(0, 0, 0),
+                 background=None,
+                 antialias=True):
         super().__init__(x, y, 0, 0)
 
         self.text = font.render(label, antialias, color, background)
@@ -240,8 +301,9 @@ class Text(Element):
     def split(self, start):
         pass
 
+
 class Image(Element):
-    def __init__ (self, x, y, path):
+    def __init__(self, x, y, path):
         super().__init__(x, y, 0, 0)
         self.image = pygame.image.load(path)
         self.width, self.height = self.image.get_size()
@@ -252,4 +314,3 @@ class Image(Element):
     def scale(self, width, height):
         self.width, self.height = width, height
         self.image = pygame.transform.scale(self.image, (width, height))
-
