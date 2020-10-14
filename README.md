@@ -3,9 +3,11 @@
 ## Sommaire:
 - Lancer le programme
 - Epreuve 1
+    - Explication
+        - Algorithme du mur gauche
 - Epreuve 2
-- Explication
-    - Algorithme du mur gauche
+    - Explication
+        - Algorithme chemin le plus court
 - Auteurs
 - Professeurs
 
@@ -125,7 +127,7 @@ function tourner(dir_actuel: [2]int, droite: boolean)
 ```
 
 
-## Epreuve 2
+## Epreuve 2 :
 
 Vous devez maintenant proposer un algorithme qui trouve le chemin le plus court entre le
 départ et l’arrivée …. le minotaure n’étant pas endurant, ce sera plus efficace.
@@ -148,20 +150,6 @@ L'algorithme du chemin le plus court consiste à sortir le plus éfficacement du
 
 ```python
 
-def __bougerMinotaure(matrice, position, dir):
-    orientations = [[1, 0], [0, 1], [-1, 0], [0, -1]]
-    
-    # On parcout les cases en suivant l'orientation G, T, D, GG
-    for i in [-1, 0, 1, 2]:
-        # On récupère les coordonnées de la case que l'on check
-        offset_x = position[0] + orientations[(dir + i) % 4][0]
-        offset_y = position[1] + orientations[(dir + i) % 4][1]
-        # Si la case est vide, on return la nouvelle position du minotaure,
-        # ainsi que sa nouvelle direction, et ses mouvements effectués
-        if (matrice[offset_y][offset_x] == 99):
-            return ([offset_x, offset_y], (dir + i) % 4)
-        # Sinon, on continue de tourner dans la for jusqu'à trouver une case vide.
-
 # Trouve la sortie en utilisant le chemin le plus court
 def plus_court_chemin(grille, update):
     # On définit le point de départ et de fin du labyrinthe
@@ -178,6 +166,7 @@ def plus_court_chemin(grille, update):
     # On trouve le chemin le plus court
     __trouver_chemin_plus_court(grille, end, end, 1)
 
+
     while not position == end:
         # On regarde le chemin le plus court parmis les chemins
         # valide.
@@ -186,12 +175,15 @@ def plus_court_chemin(grille, update):
             if grille[y][x] < grille[position[0]][position[1]]:
                 # On choisit ce chemin
                 position = [y, x]
-
+                
+        # Mise à jour de la position dans la grille
         update(grille, position)
 
+        # Add la position dans chemin
         chemin.append(position)
 
     return chemin
+
 
 
 # Parours la grille et remplis les case avec la distance entre cette dernière et la 
@@ -226,9 +218,7 @@ def __position_possible(grille, position):
             pos_possible.append([y, x])
 
     return pos_possible
-
 ```
-
 
 ## Auteurs 
  - Romain VIVIEN
