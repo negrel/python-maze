@@ -2,9 +2,8 @@ import time
 import os
 import sys
 
+
 def loadcsv(filename):
-    # On vérifie que le fichier existe
-    filename = sys.argv[2]
     if not os.path.exists(filename):
         return None, f"Le fichier \"{filename}\" n'existe pas."
 
