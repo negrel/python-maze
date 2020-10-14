@@ -3,20 +3,29 @@
 import time
 import pygame
 import os
+import tkinter
+import tkinter.filedialog
 
 import utils
 import resolveur
-
 from gui.application import *
 from gui.button import *
 from gui.image import *
 from gui.page import *
+from gui.maze import *
+
+
+def ask_open_filepath():
+    tkinter.Tk().withdraw()
+    return tkinter.filedialog.askopenfilename()
+
 
 # Couleurs
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 # Taille standard
+SQUARE_SIZE = 36
 BTN_WIDTH = 248
 BTN_HEIGHT = 56
 
@@ -35,6 +44,23 @@ menu = None
 play = None
 solve = None
 
+
+def mode_play():
+    filepath = ask_open_filepath()
+    if len(filepath) == 0:
+        return
+
+    app.push_page(play)
+
+    maze, err = utils.loadcsv(filepath)
+    if err == None:
+        play.appendElement(Maze(*CENTER, 720, 720, maze))
+    else:
+        play.appendElement(
+            Text(*CENTER,
+                 f"Un erreur c'est produite en ouvrant le ficher: {filepath}"))
+
+
 # Menu
 menu = Page("menu")
 menu.appendElement(image)
@@ -45,7 +71,7 @@ menu.appendElement(
            BTN_WIDTH,
            BTN_HEIGHT,
            "Jouer",
-           lambda event: app.push_page(play),
+           lambda event: mode_play(),
            background=WHITE,
            color=BLACK))
 menu.appendElement(
