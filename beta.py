@@ -7,7 +7,10 @@ import os
 import utils
 import resolveur
 
-from components import *
+from gui.application import *
+from gui.button import *
+from gui.image import *
+from gui.page import *
 
 # Couleurs
 BLACK = (0, 0, 0)
