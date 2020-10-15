@@ -64,16 +64,17 @@ def mode_solve(algo):
         chemin = algo(maze)
 
         play.appendElement(
-            Maze(*CENTER,
+            Maze(
+                *CENTER,
                 #Taille du maze pour ecran Imerir
-                 window_width / 1.5,
-                 window_height / 1.5,
-                 #Taille du maze pour ecran Alexandre
-                 #window_width / 2,
-                 #window_height / 2,
-                 maze,
-                 chemin,
-                 time_sleep=.5))
+                window_width / 1.5,
+                window_height / 1.5,
+                #Taille du maze pour ecran Alexandre
+                #window_width / 2,
+                #window_height / 2,
+                maze,
+                chemin,
+                time_sleep=.5))
 
     else:
         play.appendElement(
@@ -86,8 +87,16 @@ def mode_solve(algo):
 
 # Menu
 menu = Page("menu")
-menu.appendElement(image)
 app.push_page(menu)
+
+menu.appendElement(image)
+menu.appendElement(
+    Text(CENTER[0],
+         CENTER[1] - window_height / 4,
+         "MAZE",
+         font=pygame.font.Font(os.path.join(".", "assets", "welingtom.ttf"),
+                               DEFAULT_FONT_SIZE * 4),
+         color=WHITE))
 
 menu.appendElement(
     Button(*CENTER,
@@ -128,5 +137,3 @@ btn_retour = Button(CENTER[0] - (BTN_WIDTH + 10),
 menu.appendElement(btn_retour)
 
 app.start()
-
-
