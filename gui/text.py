@@ -6,7 +6,7 @@ if not pygame.font.get_init():
     pygame.font.init()
 
 DEFAULT_FONT_NAME = pygame.font.get_default_font()
-DEFAULT_FONT_SIZE = 36
+DEFAULT_FONT_SIZE = 24
 DEFAULT_FONT = pygame.font.SysFont(DEFAULT_FONT_NAME, DEFAULT_FONT_SIZE)
 
 

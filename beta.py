@@ -26,8 +26,8 @@ WHITE = (255, 255, 255)
 
 # Taille standard
 SQUARE_SIZE = 30
-BTN_WIDTH = 150
-BTN_HEIGHT = 30
+BTN_WIDTH = 174
+BTN_HEIGHT = 36
 
 # Résolution pour l'écran Alexandre
 #app = Application("Maze", 1920, 1080)
@@ -109,7 +109,7 @@ menu.appendElement(
 
 menu.appendElement(
     Button(CENTER[0],
-           CENTER[1] + 92,
+           CENTER[1] + 56,
            BTN_WIDTH,
            BTN_HEIGHT,
            "Mur gauche",
