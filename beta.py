@@ -45,7 +45,7 @@ solve = None
 
 
 # Play menu
-def mode_play(event):
+def mode_solve(algo):
     filepath = ask_open_filepath()
     if len(filepath) == 0:
         return
@@ -58,7 +58,7 @@ def mode_play(event):
 
     maze, err = utils.loadcsv(filepath)
     if err == None:
-        chemin = resolveur.mur_gauche(maze)
+        chemin = algo(maze)
 
         play.appendElement(
             Maze(*CENTER,
@@ -67,6 +67,7 @@ def mode_play(event):
                  maze,
                  chemin,
                  time_sleep=.5))
+
     else:
         play.appendElement(
             Text(*CENTER,
@@ -85,17 +86,18 @@ menu.appendElement(
     Button(*CENTER,
            BTN_WIDTH,
            BTN_HEIGHT,
-           "Jouer",
-           mode_play,
+           "Chemin le plus court",
+           lambda event: mode_solve(resolveur.plus_court_chemin),
            background=WHITE,
            color=BLACK))
+
 menu.appendElement(
     Button(CENTER[0],
            CENTER[1] + 92,
            BTN_WIDTH,
            BTN_HEIGHT,
-           "Résoudre",
-           lambda event: print("Résoudre"),
+           "Mur gauche",
+           lambda event: mode_solve(resolveur.mur_gauche),
            background=WHITE,
            color=BLACK))
 
