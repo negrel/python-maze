@@ -7,7 +7,7 @@ DEFAULT_MINAUTORE = Image(0, 0, os.path.join(".", "assets", "minautore.png"))
 
 class Minautore():
     def __init__(self, image=DEFAULT_MINAUTORE):
-        self.image = image
+        self.image = image.copy()
         self.left_oriented = True
 
     def draw(self, surface):
