@@ -37,6 +37,7 @@ class Page(Rect):
             foreach(self.elements, lambda el: el.on_video_resize(event))
 
     def draw(self, surface):
+        surface.fill(self.background)
         foreach(self.elements, lambda el: el.draw(surface))
 
     def insertElement(self, index, element):
