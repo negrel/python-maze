@@ -25,11 +25,14 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 # Taille standard
-SQUARE_SIZE = 36
-BTN_WIDTH = 248
-BTN_HEIGHT = 56
+SQUARE_SIZE = 30
+BTN_WIDTH = 150
+BTN_HEIGHT = 30
 
-app = Application("Maze", 1920, 1080)
+# Résolution pour l'écran Alexandre
+#app = Application("Maze", 1920, 1080)
+# Résolution pour les écran IMERIR
+app = Application("Maze", 1370, 710)
 # app.debug(True)
 
 window_width, window_height = app.get_size()
@@ -62,8 +65,12 @@ def mode_play(event):
 
         play.appendElement(
             Maze(*CENTER,
-                 window_width / 3,
-                 window_height / 3,
+                #Taille du maze pour ecran Imerir
+                 window_width / 1.5,
+                 window_height / 1.5,
+                 #Taille du maze pour ecran Alexandre
+                 #window_width / 2,
+                 #window_height / 2,
                  maze,
                  chemin,
                  time_sleep=.5))
@@ -119,3 +126,5 @@ btn_retour = Button(CENTER[0] - (BTN_WIDTH + 10),
 menu.appendElement(btn_retour)
 
 app.start()
+
+
