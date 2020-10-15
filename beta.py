@@ -41,24 +41,39 @@ image.scale(*app.get_size())
 
 # Liste des pages
 menu = None
-play = None
 solve = None
 
 
-def mode_play():
+# Play menu
+def mode_play(event):
     filepath = ask_open_filepath()
     if len(filepath) == 0:
         return
 
+    play = Page("play")
+    play.appendElement(image)
+    play.appendElement(btn_quitter)
+    play.appendElement(btn_retour)
     app.push_page(play)
 
     maze, err = utils.loadcsv(filepath)
     if err == None:
-        play.appendElement(Maze(*CENTER, 720, 720, maze))
+        chemin = resolveur.mur_gauche(maze)
+
+        play.appendElement(
+            Maze(*CENTER,
+                 window_width / 3,
+                 window_height / 3,
+                 maze,
+                 chemin,
+                 time_sleep=.5))
     else:
         play.appendElement(
             Text(*CENTER,
-                 f"Un erreur c'est produite en ouvrant le ficher: {filepath}"))
+                 f"Une erreur c'est produite en ouvrant le ficher:",
+                 color=WHITE))
+        play.appendElement(
+            Text(CENTER[0], CENTER[1] + BTN_HEIGHT + 10, err, color=WHITE))
 
 
 # Menu
@@ -71,7 +86,7 @@ menu.appendElement(
            BTN_WIDTH,
            BTN_HEIGHT,
            "Jouer",
-           lambda event: mode_play(),
+           mode_play,
            background=WHITE,
            color=BLACK))
 menu.appendElement(
@@ -102,11 +117,5 @@ btn_retour = Button(CENTER[0] - (BTN_WIDTH + 10),
                     lambda event: app.pop_page(),
                     background=BLACK)
 menu.appendElement(btn_retour)
-
-# Play menu
-play = Page("play")
-play.appendElement(image)
-play.appendElement(btn_quitter)
-play.appendElement(btn_retour)
 
 app.start()
