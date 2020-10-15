@@ -1,4 +1,9 @@
-# Projet d'intégrationer 1 année "labyrinthe"
+<p align="center">
+	<img alt="minautore" src="https://gitlab.imerir.com/alexandre.negrel/maze/-/raw/master/.gitlab/minotaure.png">
+</p>
+
+Projet d'intégrationer 1 année  "labyrinthe"
+==
 
 ## Sommaire:
 - Lancer le programme
