@@ -15,3 +15,6 @@ class Image(Element):
     def scale(self, width, height):
         self.width, self.height = width, height
         self.image = pygame.transform.scale(self.image, (width, height))
+
+    def flip(self, xbool=False, ybool=False):
+        self.image = pygame.transform.flip(self.image, xbool, ybool)
