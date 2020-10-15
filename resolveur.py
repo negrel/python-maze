@@ -6,6 +6,7 @@ from utils import *
 
 clear = lambda: os.system('clear')
 
+
 def mur_gauche(grille):
     # On définit le point de départ et de fin du labyrinthe
     start = [1, 1]
@@ -144,6 +145,7 @@ def __bougerMinotaure(matrice, position, dir):
             return ([offset_x, offset_y], (dir + i) % 4)
         # Sinon, on continue de tourner dans la for jusqu'à trouver une case vide.
 
+
 # Trouve la sortie en utilisant le chemin le plus court
 def plus_court_chemin(grille):
     # On définit le point de départ et de fin du labyrinthe
@@ -174,7 +176,7 @@ def plus_court_chemin(grille):
     return chemin
 
 
-# Parours la grille et remplis les case avec la distance entre cette dernière et la 
+# Parcours la grille et remplis les cases avec la distance entre cette dernière et la
 # sortie.
 def __trouver_chemin_plus_court(grille, actuel_pos, distance):
     # On insère la distance entre la case actuel et la sortie
@@ -189,10 +191,11 @@ def __trouver_chemin_plus_court(grille, actuel_pos, distance):
         y, x = prochaine_position
         # Si la case est libre, on appelle récursivement cette fonction
         if grille[y][x] > distance:
-           return __trouver_chemin_plus_court(grille, prochaine_position, distance + 1)
+            __trouver_chemin_plus_court(grille, prochaine_position,
+                                        distance + 1)
 
 
-# Retourne les prochaine position possible depuis la position donnée en paramètre.
+# Retourne les prochaines positions possible depuis la position donnée en paramètre.
 def __position_possible(grille, position):
     pos_possible = []
 
