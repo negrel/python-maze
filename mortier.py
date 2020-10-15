@@ -19,15 +19,15 @@ def ditance_tir(obus):
 
 class Obus:
     def __init__(self):
-        self.v0 = 0.0
-        self.alpha = 0.0
+        self.v0 = 0.0       #vitesse à t=0
+        self.alpha = 0.0    #angle de tir
         
 # definir l'obus!!   
         
 class cible:
     def __init__(self):
-        self.dc = 0.0
-        self.rc = 0.0
+        self.dc = 0.0    #centre cible
+        self.rc = 0.0    #rayon cible
         
 # definir la cible!!
         
@@ -49,8 +49,8 @@ LONG = 1
 
 class resultat_tire:
     def __init__(self):
-        self.dist = 0.0
-        self.rtir = 0
+        self.dist = 0.0   #dist = distance tire
+        self.rtir = 0     #rtir = resultat tire, COURT, LONG, TOUCHEE
         
 
     def tire(obus, cible, resultat):
