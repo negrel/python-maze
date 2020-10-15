@@ -7,6 +7,12 @@ def loadcsv(filename):
     if not os.path.exists(filename):
         return None, f"Le fichier \"{filename}\" n'existe pas."
 
+    if not os.path.isfile(filename):
+        return None, f"Le chemin \"{filename}\" mène vers un répertoire."
+
+    if not filename.lower().endswith(".csv"):
+        return None, f"Le fichier \"{filename}\" n'a pas une extension CSV."
+
     return opencsv(filename), None
 
 
