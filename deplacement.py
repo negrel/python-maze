@@ -15,9 +15,10 @@ def tourner(dir_actuel, droite):
     dir_actuel = dir_actuel.copy()
 
     # On inverse le signe si necessaire
-    i = int(not droite)
-    if not dir_actuel[i] == 0:
-        dir_actuel[i] *= -1
+    if droite and dir_actuel[1] == 0:
+        dir_actuel[0] *= -1
+    elif not droite and dir_actuel[0] == 0:
+        dir_actuel[1] *= -1
 
     # On inverse l'index Y et X
     x = dir_actuel[0]

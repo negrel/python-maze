@@ -1,73 +1,81 @@
 #!/usr/bin/env python3
 
-import solution
-import sys
 import time
-import os
-import resolveur
+import pygame
+
 import utils
-import deplacement
+import resolveur
+
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 600
+
+WALL = (0, 0, 0)
+BACKGROUND = (255, 255, 255)
+MINAUTORE = (70, 0, 72)
+
+SQUARE_SIZE = 25
+SQUARE = pygame.Rect(0, 0, SQUARE_SIZE, SQUARE_SIZE)
+
+# Initialisation de la bibliothèque pygame
+pygame.init()
+
+# Créer un fenêtre
+game_window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF)
+
+# Titre de la fenêtre
+pygame.display.set_caption("maze.py")
+
+def start(grille, chemin, sleep_time=0.1):
+    chemin.append(chemin[len(chemin)-1])
 
 
-# Fonction pour afficher l'aide en cas d'erreur sur l'appel du script
-def help_app():
-    print("Le script app.py prend deux arguments :")
-    print(" - Le type d'execution :")
-    print(
-        "     - play  -> Vous rentrez les déplacements et le minotaure les effectue."
-    )
-    print(
-        "     - solve -> Le minotaure résoud le labyrinthe et vous retourne ses déplacements"
-    )
-    print(" - Le fichier .csv du labyrinthe")
-    print("ex: app.py play ./exemple/exemple1.csv")
+    # On initialise l'écran avec un fond blanc
+    game_window.fill(BACKGROUND)
+    # On affiche le labyrinthe
+    draw_maze(grille)
+
+    game_running = True
+    while game_running:
+        # On boucle à travers tout les évenements
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_running = False
+            if event.type == pygame.VIDEORESIZE:
+                WINDOW_WIDTH, WINDOW_HEIGHT = event.size
+
+        # Mise des éléments à l'écran
+        if not len(chemin) == 1:
+            update_frame(grille, chemin[0], chemin[1])
+            chemin = chemin[1:]
+
+        # Met à jour l'écran
+        pygame.display.update()
+
+    pygame.quit()
+
+def draw_maze(grille):
+    for i, ligne in enumerate(grille):
+        for j, colonne in enumerate(ligne):
+            color = BACKGROUND
+
+            if colonne == -1:
+                color = WALL
+
+            pygame.draw.rect(game_window, color, SQUARE.move(j * SQUARE_SIZE, i * SQUARE_SIZE))
+
+def update_frame(grille, precedente_pos, actuel_pos, sleep_time=0.3):
+    # On efface le minautore à la position precedente.
+    y, x = precedente_pos
+    pygame.draw.rect(game_window, BACKGROUND, SQUARE.move((x * SQUARE_SIZE, y * SQUARE_SIZE)))
 
 
-def cli(grille, update):
-    start = [1, 1]
-    end = [len(grille) - 2, len(grille[0]) - 2]
+    # On dessine le minautore à la position actuel.
+    y, x = actuel_pos
+    pygame.draw.rect(game_window, MINAUTORE, SQUARE.move((x * SQUARE_SIZE, y * SQUARE_SIZE)))
 
-    update(grille, start, sleep_time=0)
+    time.sleep(sleep_time)
 
-    while True:
-        ordres = ""
-        # On demande à l'utilisateur de rentrer les ordres.
-        try:
-            ordres = input(f"Entrer les directions pour finir le labyrinthe: ")
-        # CTRL-D on quitte le programme.
-        except EOFError:
-            break
+maze = utils.opencsv("./exemple/exemple1.csv")
+chemin = resolveur.plus_court_chemin(maze)
 
-        # Si on a pas gagner on affiche l'erreur retourner.
-        gagner, err = solution.verifie(grille, start, end, ordres)
-        if not gagner:
-            print(f"Erreur: {err} (ctrl-D pour quitter)")
-
-        else:
-            print("Vous avez gagné, félicitations.")
-            break
-
-
-# S'il y a moins de deux argument utilisateur, on affiche l'aide et on quitte
-# (Le premier argument est le nom du script)
-if (len(sys.argv) < 3):
-    help_app()
-    exit()
-
-# On vérifie que le fichier passé en argument existe, sinon on quitte
-filename = sys.argv[2]
-if not os.path.exists(filename):
-    print("Le fichier '" + filename + "' n'existe pas.")
-    exit()
-
-# S'il existe, on regarde ce que l'utilisateur veut faire et on l'envoit
-# sur la bonne fonction
-maze = utils.loadcsv(filename)
-if (sys.argv[1] == 'play'):
-    cli(maze, utils.update)
-elif (sys.argv[1] == 'solve'):
-    chemin = resolveur.mur_gauche(maze, utils.update)
-    directions = deplacement.analyse_chemin(chemin)
-    print(f"Le minautore a suivis le chemin suivant: \n{directions}")
-else:
-    print("Play ou Solve en argument")
+start(maze, chemin)

@@ -1,11 +1,13 @@
-from deplacement import *
-from utils import *
 import os
 import time
+
+from deplacement import *
+from utils import *
+
 clear = lambda: os.system('clear')
 
 
-def mur_gauche(grille, update):
+def mur_gauche(grille):
     # On définit le point de départ et de fin du labyrinthe
     start = [1, 1]
     end = [len(grille) - 2, len(grille[0]) - 2]
@@ -31,9 +33,6 @@ def mur_gauche(grille, update):
         else:
             # On tourne à droite
             direction = tourner(direction, droite=True)
-
-        # On affiche a l'écran le labyrinthe
-        update(grille, position)
 
     return chemin
 
@@ -145,3 +144,64 @@ def __bougerMinotaure(matrice, position, dir):
         if (matrice[offset_y][offset_x] == 99):
             return ([offset_x, offset_y], (dir + i) % 4)
         # Sinon, on continue de tourner dans la for jusqu'à trouver une case vide.
+
+
+# Trouve la sortie en utilisant le chemin le plus court
+def plus_court_chemin(grille):
+    # On définit le point de départ et de fin du labyrinthe
+    start = [1, 1]
+    end = [len(grille) - 2, len(grille[0]) - 2]
+
+    # Liste des cases par lequel ils passent
+    chemin = [start]
+
+    # Position et direction du minautore
+    position = start
+    direction = directions["DROITE"]
+
+    # On trouve le chemin le plus court
+    __trouver_chemin_plus_court(grille, end, 1)
+
+    while not position == end:
+        # On regarde le chemin le plus court parmis les chemins
+        # valide.
+        for y, x in __position_possible(grille, position):
+            # Si le chemin est plus court
+            if grille[y][x] < grille[position[0]][position[1]]:
+                # On choisit ce chemin
+                position = [y, x]
+
+        chemin.append(position)
+
+    return chemin
+
+
+# Parcours la grille et remplis les cases avec la distance entre cette dernière et la
+# sortie.
+def __trouver_chemin_plus_court(grille, actuel_pos, distance):
+    # On insère la distance entre la case actuel et la sortie
+    y, x = actuel_pos
+    grille[y][x] = distance
+
+    if actuel_pos == [1, 1]:
+        return
+
+    # On essaie toute les positions possible
+    for prochaine_position in __position_possible(grille, actuel_pos):
+        y, x = prochaine_position
+        # Si la case est libre, on appelle récursivement cette fonction
+        if grille[y][x] > distance:
+            __trouver_chemin_plus_court(grille, prochaine_position,
+                                        distance + 1)
+
+
+# Retourne les prochaines positions possible depuis la position donnée en paramètre.
+def __position_possible(grille, position):
+    pos_possible = []
+
+    for dir in directions.values():
+        y, x = avancer(position, dir)
+        if not grille[y][x] == -1:
+            pos_possible.append([y, x])
+
+    return pos_possible
