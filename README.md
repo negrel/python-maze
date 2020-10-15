@@ -221,6 +221,9 @@ def __position_possible(grille, position): [][2]int
     return pos_possible
 ```
 
+
+## Epreuve 3 :
+
 ## Auteurs 
  - Romain VIVIEN
  - Alexandre NEGREL
