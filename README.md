@@ -113,9 +113,9 @@ function avancer(position: [2]int, direction: [2]int)
 function tourner(dir_actuel: [2]int, droite: boolean)
     # On inverse le signe si necessaire
     if droite and droite[1] = 0:
-        droite[0] <- -1
+        droite[0] <- droite[0] * -1
     elif not droite and droite[0] = 0:
-        droite[1] <- -1
+        droite[1] <- droite[1] * -1
 
     # On inverse l'index Y et X
     x <- dir_actuel[0]
@@ -151,21 +151,20 @@ L'algorithme du chemin le plus court consiste à sortir le plus éfficacement du
 ```python
 
 # Trouve la sortie en utilisant le chemin le plus court
-def plus_court_chemin(grille, update):
+def plus_court_chemin(grille: [][]int): [][2]int
     # On définit le point de départ et de fin du labyrinthe
-    start = [1, 1]
-    end = [len(grille) - 2, len(grille[0]) - 2]
+    start: [2]int <- [1, 1]
+    end: [2]int <- [len(grille) - 2, len(grille[0]) - 2]
 
     # Liste des cases par lequel ils passent
-    chemin = [start]
+    chemin: [][2]int <- [start]
 
     # Position et direction du minautore
-    position = start
-    direction = directions["DROITE"]
+    position: [2]int <- start
+    direction: [2]int <- directions["DROITE"]
 
     # On trouve le chemin le plus court
     __trouver_chemin_plus_court(grille, end, end, 1)
-
 
     while not position == end:
         # On regarde le chemin le plus court parmis les chemins
@@ -175,9 +174,6 @@ def plus_court_chemin(grille, update):
             if grille[y][x] < grille[position[0]][position[1]]:
                 # On choisit ce chemin
                 position = [y, x]
-                
-        # Mise à jour de la position dans la grille
-        update(grille, position)
 
         # Add la position dans chemin
         chemin.append(position)
@@ -188,9 +184,9 @@ def plus_court_chemin(grille, update):
 
 # Parours la grille et remplis les case avec la distance entre cette dernière et la 
 # sortie.
-def __trouver_chemin_plus_court(grille, precedente_pos, actuel_pos, distance):
+def __trouver_chemin_plus_court(grille: [][]int, precedente_pos: [2]int, actuel_pos: [2]int, distance: int)
     # On insère la distance entre la case actuel et la sortie
-    y, x = actuel_pos
+    y:int , x: int = actuel_pos
     grille[y][x] = distance
 
     if actuel_pos == [1, 1]:
@@ -202,14 +198,14 @@ def __trouver_chemin_plus_court(grille, precedente_pos, actuel_pos, distance):
         if precedente_pos == prochaine_position:
             continue
 
-        y, x = prochaine_position
+        y: int, x: int = prochaine_position
         # Si la case est libre, on appelle récursivement cette fonction
         if grille[y][x] > distance or grille[y][x] == 99:
             __trouver_chemin_plus_court(grille, actuel_pos, prochaine_position, distance + 1)
 
 
 # Retourne les prochaine position possible depuis la position donnée en paramètre.
-def __position_possible(grille, position):
+def __position_possible(grille, position): [][2]int
     pos_possible = []
 
     for dir in directions.values():
