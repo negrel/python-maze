@@ -6,6 +6,7 @@ from gui.element import *
 class Image(Element):
     def __init__(self, x, y, path):
         super().__init__(x, y, 0, 0)
+        self.path = path
         self.image = pygame.image.load(path)
         self.width, self.height = self.image.get_size()
 
@@ -18,3 +19,9 @@ class Image(Element):
 
     def flip(self, xbool=False, ybool=False):
         self.image = pygame.transform.flip(self.image, xbool, ybool)
+
+    def rotate(self, angle):
+        self.image = pygame.transform.flip(self.image, angle)
+
+    def copy(self):
+        return Image(*self.get_origin_pos(), self.path)
